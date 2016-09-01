@@ -295,6 +295,13 @@ int main(int argc, char* argv[])
     std::cout << std::scientific << std::setprecision(std::numeric_limits<double>::digits10);
     std::cout << std::scientific << std::setprecision(std::numeric_limits<double>::digits10);
     bool same = diffCSV(*csvA, *csvB, vec_abs_tol, vec_rel_tol, verbose);
+    if (!same)
+    {
+        std::cout << "Found a difference between the two files\n";
+        std::cout << "* " << filePathA << "\n";
+        std::cout << "* " << filePathB << "\n";
+        std::cout << "\n" << std::endl;
+    }
 
     return same ? EXIT_SUCCESS : EXIT_FAILURE;
 }
