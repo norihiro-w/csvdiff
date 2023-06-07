@@ -1,4 +1,4 @@
-/* Copyright 2016 Norihiro Watanabe. All rights reserved.
+/* Copyright 2016-2023 Norihiro Watanabe. All rights reserved.
 
 csvdiff is free software; you can redistribute and use in source and
 binary forms, with or without modification. tec2vtk is distributed in the
@@ -255,7 +255,7 @@ bool diffCSV(CSVData const& csvA, CSVData const& csvB, std::vector<double> const
 
 int main(int argc, char* argv[])
 {
-    TCLAP::CmdLine cmd("csvdiff software", ' ', "0.1");
+    TCLAP::CmdLine cmd("csvdiff", ' ', "0.1");
 
     TCLAP::UnlabeledValueArg<std::string> argFileNameA("input-file-a", "Path to a csv file.", true, "", "file path");
     cmd.add(argFileNameA);
@@ -263,8 +263,8 @@ int main(int argc, char* argv[])
     TCLAP::UnlabeledValueArg<std::string> argFileNameB("input-file-b", "Path to a csv file.", true, "", "file path");
     cmd.add(argFileNameB);
 
-    TCLAP::SwitchArg argVerbose("v", "verbose", "print which values differ.", true);
-    cmd.add(argVerbose);
+    TCLAP::SwitchArg argSummary("s", "summary", "print only summary of the comparison.", false);
+    cmd.add(argSummary);
 
     TCLAP::ValueArg<double> argAbsTol("a", "abs", "absolute tolerance", false, 1e-10, "float");
     cmd.add(argAbsTol);
@@ -278,7 +278,7 @@ int main(int argc, char* argv[])
     auto const filePathB = argFileNameB.getValue();
     auto const abs_tol = argAbsTol.getValue();
     auto const rel_tol = argRelTol.getValue();
-    auto const verbose = argVerbose.getValue();
+    auto const print_only_summary = argSummary.getValue();
     char const delim = ',';
 
     // if (verbose)
@@ -301,7 +301,7 @@ int main(int argc, char* argv[])
     std::vector<double> vec_rel_tol(vec_abs_tol.size(), rel_tol);
     std::cout << std::scientific << std::setprecision(std::numeric_limits<double>::digits10);
     std::cout << std::scientific << std::setprecision(std::numeric_limits<double>::digits10);
-    bool same = diffCSV(*csvA, *csvB, vec_abs_tol, vec_rel_tol, verbose);
+    bool same = diffCSV(*csvA, *csvB, vec_abs_tol, vec_rel_tol, !print_only_summary);
     if (!same)
     {
         std::cout << "Found a difference between the two files\n";
