@@ -1,8 +1,8 @@
 /* Copyright 2016 Norihiro Watanabe. All rights reserved.
 
-csvdiff is free software; you can redistribute and use in source and 
-binary forms, with or without modification. tec2vtk is distributed in the 
-hope that it will be useful but WITHOUT ANY WARRANTY; without even the 
+csvdiff is free software; you can redistribute and use in source and
+binary forms, with or without modification. tec2vtk is distributed in the
+hope that it will be useful but WITHOUT ANY WARRANTY; without even the
 implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 */
@@ -280,6 +280,13 @@ int main(int argc, char* argv[])
     auto const rel_tol = argRelTol.getValue();
     auto const verbose = argVerbose.getValue();
     char const delim = ',';
+
+    // if (verbose)
+    // {
+    //     std::cout << "Files to be compared:\n";
+    //     std::cout << "- " << filePathA << "\n";
+    //     std::cout << "- " << filePathB << "\n" << std::endl;
+    // }
 
     // read the CSV data
     std::unique_ptr<CSVData> csvA(readCSV(filePathA, delim));
